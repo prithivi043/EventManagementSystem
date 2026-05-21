@@ -1,20 +1,12 @@
 const express = require("express");
-
 const cors = require("cors");
 
 require("dotenv").config();
 
-const authRoutes =
-  require("./routes/authRoutes");
-
-const eventRoutes =
-  require("./routes/eventRoutes");
-
-const registrationRoutes =
-  require("./routes/registrationRoutes");
-
-const userRoutes =
-  require("./routes/userRoutes");
+const authRoutes = require("./routes/authRoutes");
+const eventRoutes = require("./routes/eventRoutes");
+const registrationRoutes = require("./routes/registrationRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 
@@ -22,39 +14,16 @@ app.use(cors());
 
 app.use(express.json());
 
-app.use(
-  "/api/auth",
-  authRoutes
-);
-
-app.use(
-  "/api/events",
-  eventRoutes
-);
-
-app.use(
-  "/api/registrations",
-  registrationRoutes
-);
-
-app.use(
-  "/api/users",
-  userRoutes
-);
-
 app.get("/", (req, res) => {
-
-  res.send(
-    "Event Management API Running"
-  );
+  res.send("Event Management API Running");
 });
 
-const PORT =
-  process.env.PORT || 5000;
+app.use("/api/auth", authRoutes);
 
-app.listen(PORT, () => {
+app.use("/api/events", eventRoutes);
 
-  console.log(
-    `Server running on port ${PORT}`
-  );
-});
+app.use("/api/registrations", registrationRoutes);
+
+app.use("/api/users", userRoutes);
+
+module.exports = app;
